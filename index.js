@@ -14,6 +14,8 @@ client.on('message', message => {
 
     let commands = ['help', 'clear'];
 
+    console.log(new Date().toLocaleString())
+
     if (message.member.hasPermission('MANAGE_MESSAGES')) {
 
         if (message.content.startsWith(`${prefix}${commands[0]}`)) {
