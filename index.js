@@ -12,7 +12,7 @@ client.on('ready', ()=> {
 
 client.on('message', message => {
 
-    let commands = ['help', 'clear'];
+    let commands = ['help', 'clear', 'allclear'];
 
     console.log(new Date().toLocaleString())
 
@@ -31,6 +31,16 @@ client.on('message', message => {
                 let unpinned_messages = messages.filter(fetched_msg => !fetched_msg.pinned);
 
                 message.channel.bulkDelete(unpinned_messages)
+
+            })
+
+        }
+
+        if (message.content.startsWith(`${prefix}${commands[2]}`)) {
+
+            message.channel.messages.fetch().then((messages) => {
+
+                message.channel.bulkDelete(messages)
 
             })
 
