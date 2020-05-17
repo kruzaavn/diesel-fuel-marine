@@ -10,13 +10,19 @@ client.on('ready', ()=> {
 
 );
 
+
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time))
+
+}
+
 client.on('message', message => {
 
-    let commands = ['help', 'clear', 'allclear'];
+    let commands = ['help', 'clear_bulk', 'clear_pinned', "clear_old"];
 
-    console.log(new Date().toLocaleString())
 
     if (message.member.hasPermission('MANAGE_MESSAGES')) {
+
 
         if (message.content.startsWith(`${prefix}${commands[0]}`)) {
 
@@ -42,6 +48,19 @@ client.on('message', message => {
 
                 message.channel.bulkDelete(messages)
 
+            })
+
+        }
+
+        if (message.content.startsWith(`${prefix}${commands[3]}`)) {
+
+            message.channel.messages.fetch().then((messages) => {
+
+                let unpinned_messages = messages.filter(fetched_msg => !fetched_msg.pinned);
+
+                for (let msg of unpinned_messages) {
+                    sleep(1000).then(() => {message.channel.messages.delete(msg[0])})
+                }
             })
 
         }
